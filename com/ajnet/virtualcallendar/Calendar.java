@@ -21,20 +21,58 @@ public class Calendar {
 				return maxday[month-1];
 			}
 		}
+		public static int parseDay(String week) {
+			if(week == "일") {
+					return 0;
+				}
+				else if (week == "월") {
+					return 1;
+				}else if(week=="화") {
+					return 2;
+				}else if(week=="수") {
+					return 3;
+			    }else if(week=="목") {
+					return 4;
+			    }else if(week=="금") {
+					return 5;
+			    }else{ 
+			    	return 6;
+			    }
+	    }
 		
-		public void printCalendar(int year, int month) {
+		public void printCalendar(int year, int month, int weekday) {
 			System.out.printf("   <<%4d %3d>> \n", year, month);
 			System.out.println(" 일 월 화 수 목 금 토");
 			System.out.println("---------------------");
 			
+			//print blank 
+			for(int i = 0; i < weekday; i++) {
+				System.out.printf("   ");
+			}
+			
 			int maxDay = getMonthDays(year, month);
-				
-			for(int i = 1; i <= maxDay; i++) {
+			
+			//첫번째 줄 출력
+			int count = 7 - weekday;
+			
+			for(int i = 1; i <= count; i++) {
 				System.out.printf("%3d", i);
-				if(i % 7 == 0) {
+			}
+			System.out.println();
+			
+			// 
+			count++;
+			
+			for(int i = count; i <= maxDay; i++) {
+				
+				System.out.printf("%3d", i);
+				
+				if(i % 7 == count-1) {
+					
 					System.out.println();
 				}
 			}
+			
 			System.out.println();
 			
 		}
@@ -57,7 +95,14 @@ public class Calendar {
 				s2 = sc.next();
 				year = Integer.parseInt(s1);
 				month = Integer.parseInt(s2);
-												
+				
+				System.out.println("첫째날의 요일을 입력하세요(월, 화, 수, 목, 금, 토)");
+				String str_weekDay;
+				str_weekDay = sc.next();
+				int weekday = parseDay(str_weekDay);
+				
+				System.out.println(str_weekDay + " , " + weekday);
+					
 								
 				if(month == -1) {
 					break;
@@ -67,11 +112,11 @@ public class Calendar {
 				}
 				else 
 				{
-					cal.printCalendar(year, month);
+					cal.printCalendar(year, month, weekday);
 				}
 			}
 			
 			System.out.println("Bye~~");
-			
+			sc.close();
 		}
 }
